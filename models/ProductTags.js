@@ -8,7 +8,7 @@ ProductTag.init({
     // define columns6
     id: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
         primaryKey: true,
         autoIncrement: true,
     },
