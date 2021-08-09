@@ -7,10 +7,10 @@ router.get('/', (req, res) => {
     // find all tags
     // be sure to include its associated Product data
     Tag.findAll({
-            include: [{
+            include: {
                 model: Product,
-                attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
-            }]
+                attributes: ['product_name', 'price', 'stock', 'category_id']
+            }
         })
         .then(dbTagData => res.json(dbTagData))
         .catch(err => {
@@ -19,7 +19,6 @@ router.get('/', (req, res) => {
         });
 });
 
-
 router.get('/:id', (req, res) => {
     // find a single tag by its `id`
     // be sure to include its associated Product data
@@ -27,18 +26,12 @@ router.get('/:id', (req, res) => {
             where: {
                 id: req.params.id
             },
-            include: [{
+            include: {
                 model: Product,
-                attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
-            }]
-        })
-        .then(dbTagData => {
-            if (!dbTagData) {
-                res.status(404).json({ message: 'No tag found with this id' });
-                return;
+                attributes: ['product_name', 'price', 'stock', 'category_id']
             }
-            res.json(dbTagData);
         })
+        .then(dbTagData => res.json(dbTagData))
         .catch(err => {
             console.log(err);
             res.status(500).json(err);
@@ -65,7 +58,7 @@ router.put('/:id', (req, res) => {
             }
         })
         .then(dbTagData => {
-            if (!dbTagData[0]) {
+            if (!dbTagData) {
                 res.status(404).json({ message: 'No tag found with this id' });
                 return;
             }
@@ -75,9 +68,7 @@ router.put('/:id', (req, res) => {
             console.log(err);
             res.status(500).json(err);
         });
-
 });
-
 
 router.delete('/:id', (req, res) => {
     // delete on tag by its `id` value
@@ -98,6 +89,5 @@ router.delete('/:id', (req, res) => {
             res.status(500).json(err);
         });
 });
-
 
 module.exports = router;
