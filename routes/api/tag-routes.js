@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const { TableHints } = require('sequelize/types');
 const { Tag, Product, ProductTag } = require('../../models');
 
 // The `/api/tags` endpoint
@@ -12,12 +11,14 @@ router.get('/', (req, res) => {
                 model: Product,
                 attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
             }]
-        }).then(dbTagData => res.json(dbTagData))
+        })
+        .then(dbTagData => res.json(dbTagData))
         .catch(err => {
-            console.log(err),
-                res.status(505).json(err);
+            console.log(err);
+            res.status(500).json(err);
         });
 });
+
 
 router.get('/:id', (req, res) => {
     // find a single tag by its `id`
@@ -48,7 +49,8 @@ router.post('/', (req, res) => {
     // create a new tag
     Tag.create({
             tag_name: req.body.tag_name
-        }).then(dbTagData => res.json(dbTagData))
+        })
+        .then(dbTagData => res.json(dbTagData))
         .catch(err => {
             console.log(err);
             res.status(500).json(err);
@@ -61,9 +63,32 @@ router.put('/:id', (req, res) => {
             where: {
                 id: req.params.id
             }
-        }).then(dbTagData => {
+        })
+        .then(dbTagData => {
+            if (!dbTagData[0]) {
+                res.status(404).json({ message: 'No tag found with this id' });
+                return;
+            }
+            res.json(dbTagData);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+
+});
+
+
+router.delete('/:id', (req, res) => {
+    // delete on tag by its `id` value
+    Tag.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(dbTagData => {
             if (!dbTagData) {
-                req.status(404).json({ message: 'No tag found with this id' });
+                res.status(404).json({ message: 'No tag found with this id' });
                 return;
             }
             res.json(dbTagData);
@@ -74,23 +99,5 @@ router.put('/:id', (req, res) => {
         });
 });
 
-router.delete('/:id', (req, res) => {
-    // delete on tag by its `id` value
-    Tag.destroy({
-            where: {
-                id: req.params.id
-            }
-        }).then(dbTagData => {
-            if (!dbTagData) {
-                req.status(404).json({ message: 'No tag found with this id' });
-                return;
-            }
-            res.json(dbTagData);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        });
-});
 
 module.exports = router;
