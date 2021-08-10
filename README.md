@@ -10,11 +10,16 @@ https://github.com/xuannga/E-Commerce-BE
 See a walkthrough of the application: https://www.youtube.com/watch?v=LhxgXFAVt7Q 
 
 ## Installs/Initiating
---npm i
+-npm i
+<br />
 -mysql -u root -p
+<br />
 -password
+<br />
 -source db
+<br />
 -npm run seed
+<br />
 -npm start
 
 
