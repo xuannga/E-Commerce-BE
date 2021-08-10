@@ -1,5 +1,5 @@
 {
-    "name": "e-commerce-be",
+    "name": "module-13-challenge-orm",
     "version": "1.0.0",
     "description": "",
     "main": "server.js",
@@ -11,19 +11,18 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/xuannga/E-Commerce-BE.git"
+        "url": "git@work.github.com:coding-boot-camp/module-13-challenge-orm.git"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/xuannga/E-Commerce-BE/issues"
+    "devDependencies": {
+        "nodemon": "^2.0.3"
     },
-    "homepage": "https://github.com/xuannga/E-Commerce-BE#readme",
     "dependencies": {
-        "dotenv": "^10.0.0",
+        "dotenv": "^8.2.0",
         "express": "^4.17.1",
-        "mysql2": "^2.2.5",
-        "sequelize": "^6.6.5"
+        "mysql2": "^2.1.0",
+        "sequelize": "^5.21.7"
     }
 }

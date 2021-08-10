@@ -28,7 +28,7 @@ router.get('/:id', async(req, res) => {
                 model: Product,
             }
         });
-        if (!dbCatData) {
+        if (!catData) {
             res.status(404).json({ message: 'No categories found' });
             return;
         }
